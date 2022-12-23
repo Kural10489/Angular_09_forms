@@ -1,0 +1,56 @@
+{{userModel|json}}
+<div class="form">
+  <form action="" #formdata="ngForm" (ngSubmit)="onSubmit()" class="row g-3">
+    {{formdata.value|json}}
+    <hr>
+    Untouched: {{name.untouched}} <br>
+    Touched: {{name.touched}} <br>
+    Feild Value Changed: {{name.dirty}} <br>
+    Form validity: {{formdata.valid}}
+    <hr>
+    <div class="col-md-6">
+    <label for="">Enter Name:</label>
+    <input type="text" name="user" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" pattern="[a-z]{5}" class="form-control" [(ngModel)]="userModel.name">
+    <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is invalid</small>
+    </div><br>
+
+    <div class="col-md-6">
+    <label for="">Enter email:</label>
+    <input type="email" name="email" class="form-control" [(ngModel)]="userModel.email">
+    </div><br>
+
+    <div class="col-md-6">
+    <label for="">Enter Phone Number</label>
+    <input type="number" name="PhoneNumber" #phone="ngModel" pattern="\d{10}" [class.is-invalid]="phone.invalid && phone.touched" class="form-control" [(ngModel)]="userModel.phone">
+    <!-- <small class="text-danger" [class.d-none]="phone.valid || phone.untouched">Phone Number must be 10 numbers</small> -->
+
+<!-- <div *ngIf="phone.errors && (phone.invalid||phone.untouched)"> -->
+
+<div *ngIf="phone.untouched">
+  <small>Phone number is Required</small>
+  </div>
+<div *ngIf="phone.touched && phone.invalid">
+<small>Phone number must have 10 digits</small>
+</div>
+
+</div>
+  <br>
+
+    <div class="col-md-6">
+    <label>Choose a size</label>
+    <select name="shirtSize" class="form-control" [(ngModel)]="userModel.shirtSize">
+      <option value="">Shirt Size</option>
+      <option value="" *ngFor="let i of shirts">{{i}}</option>
+    </select>
+    </div><br>
+
+    <div class="col-md-6">
+    <input type="checkbox" name="terms" class="form-check-input" [(ngModel)]="userModel.Terms">
+    <label for="" class="form-check-label">Terms & Policies</label>
+    </div><br>
+    <button type="submit" [disabled]="formdata.invalid" class="btn btn-danger ">Submit</button>
+  </form>
+<hr>
+<h3>Reactive Forms</h3>
+
+<app-reactiveforms></app-reactiveforms>

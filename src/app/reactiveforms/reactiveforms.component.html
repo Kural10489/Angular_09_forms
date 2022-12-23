@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <form [formGroup]="registrationForm">
+    <div class="form-group">
+  <label>Enter Username</label>
+  <input type="text" class="form-control"  formControlName="username"
+  [class.is-invalid]="registrationForm.get('username')?.invalid && registrationForm.get('username')?.touched" pattern="[a-z]{5}"
+  >
+  <!-- <small class="text-danger" [class.d-none]="registrationForm.get('username')?.valid ||registrationForm.get('username')?.untouched">Invalid Username</small> -->
+  <div *ngIf="registrationForm.get('username')?.invalid && (registrationForm.get('username')?.touched|| registrationForm.get('username')?.dirty)">
+  <small class="text-danger" *ngIf="registrationForm.get('username')?.errors?.['required']">Username is required</small>
+  <small class="text-danger" *ngIf="registrationForm.get('username')?.errors?.['minlength']">Username Must be atleast 3 charecters</small>
+  </div>
+    </div>
+<br>
+    <div class="form-group">
+      <label>Enter password</label>
+      <input type="password" class="form-control" formControlName="password">
+        </div>
+
+<br>
+        <div class="form-group">
+          <label>Confirm password</label>
+          <input type="password" [class.is-invalid]="registrationForm.errors?.['misMatch']&&(registrationForm.touched || registrationForm.dirty)" class="form-control" formControlName="confirmPassword">
+          <small class="text-danger" *ngIf="registrationForm.errors?.['misMatch']">Password dosen't Match</small>
+            </div> <br>
+
+            <div formGroupName="address">
+
+              <div class="form-group ">
+                <label>City</label>
+                <input type="text" formControlName="city" class="formControl">
+              </div>
+
+              <div class="form-group ">
+                <label>State</label>
+                <input type="text" formControlName="state" class="formControl">
+              </div>
+
+              <div class="form-group">
+                <label>Pincode</label>
+                <input type="text" formControlName="Pincode" class="formControl">
+              </div>
+
+            </div>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+</div>
+{{registrationForm.value|json}}
